@@ -1,3 +1,5 @@
+import { translation_span, lang_from_input } from './speech_synth.js';
+
 var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 var SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList
 var SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent
@@ -16,12 +18,13 @@ if (typeof SpeechRecognition === "undefined") {
 } else {
   // recognition obj
   var recognition = new SpeechRecognition();
-  recognition.lang = 'en-US';
+  recognition.lang = lang_from_input.value;
   recognition.continuous = true;
   recognition.interimResults = true;
 
   recognition.onstart = function() {
     console.log("recognition started");
+    recog_button.textContent = 'Stop recognition'
     recognizing = true;
   }
 
@@ -31,7 +34,6 @@ if (typeof SpeechRecognition === "undefined") {
   }
   
   recognition.onresult = function(event) {
-    console.log(event)
     var interim_transcript = '';
 
     if (typeof(event.results) === "undefined") {
@@ -51,22 +53,35 @@ if (typeof SpeechRecognition === "undefined") {
     }
   }
   
+  recognition.onsoundend = function(){
+    console.log("onsoundend");
+  }
+
+  recognition.onaudioend = function() {
+    console.log("onaudioend");
+  }
+
+  recognition.onspeechend = function() {
+    console.log("onspeechend");
+  }
+
   recognition.onend = function() {
     console.log("recognition ended")
     recognizing = false;
+    recog_button.textContent = 'Start recognition'
   }
 }
 
 function startRecog(event) {
   if (recognizing) {
-    event.target.textContent = 'Start recognition'
     recognition.stop();
     return;
   }
+  recognition.lang = lang_from_input.value;
   recognition.start();
-  event.target.textContent = 'Stop recognition'
   final_span.textContent = '';
   interim_span.textContent = '';
+  translation_span.textContent = '';
   final_transcript = '';
 }
 
