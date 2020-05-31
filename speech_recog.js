@@ -2,15 +2,15 @@ var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogniti
 var SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList
 var SpeechRecognitionEvent = window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent
 
-var final_span = document.querySelector('#final_span');
-var interim_span = document.querySelector('#interim_span');
-var start_button = document.querySelector('#start_button')
+export var final_span = document.querySelector('#final_span');
+export var interim_span = document.querySelector('#interim_span');
+export var recog_button = document.querySelector('#recog_button')
 
 var final_transcript = '';
-var recognizing = false;
+export var recognizing = false;
 
 if (typeof SpeechRecognition === "undefined") {
-  start_button.remove();
+  recog_button.remove();
   final_span.textContent = "Sorry! Your browser do not support Speech Recognition" 
   final_span.style.color = "red"
 } else {
@@ -57,7 +57,7 @@ if (typeof SpeechRecognition === "undefined") {
   }
 }
 
-function startButton(event) {
+function startRecog(event) {
   if (recognizing) {
     event.target.textContent = 'Start recognition'
     recognition.stop();
@@ -67,8 +67,9 @@ function startButton(event) {
   event.target.textContent = 'Stop recognition'
   final_span.textContent = '';
   interim_span.textContent = '';
-  // final_transcript = '';
+  final_transcript = '';
 }
 
+recog_button.addEventListener('click', startRecog)
 
 //https://www.google.com/intl/en/chrome/demos/speech.html

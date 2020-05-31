@@ -10,14 +10,16 @@
   </head>
   <body>
     <h1>Test Web Speech API</h1>
-    <button id="start_button" onclick="startButton(event)">Start Recognition</button>
+    <button id="recog_button">Start Recognition</button>
+    <button id="synth_button">Start Synth Voice</button>
     <div id="results">
       <span class="final" id="final_span"></span>
       <span class="interim" id="interim_span"></span>
-      <hr/>
+    </div>
+    <div>
       <span class="translation" id="translation"></span>
     </div>
   </body>
-  <script src="speech_recog.js"></script>
-  <!-- <script src="speech_synth.js"></script> -->
+  <script type="module" src="speech_recog.js"></script>
+  <script type="module" src="speech_synth.js"></script>
 </html>
