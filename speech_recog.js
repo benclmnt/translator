@@ -33,7 +33,9 @@ if (typeof SpeechRecognition === "undefined") {
     final_span.textContent=`Error: ${event.error}`
   }
   
+  var previous_interim_transcript = '';
   recognition.onresult = function(event) {
+    console.log(event)
     var interim_transcript = '';
 
     if (typeof(event.results) === "undefined") {
@@ -43,14 +45,17 @@ if (typeof SpeechRecognition === "undefined") {
     }
 
     for(let i = event.resultIndex; i < event.results.length; i++) {
+      console.log(i + " " + event.results[i]);
       if (event.results[i].isFinal) {
         final_transcript += event.results[i][0].transcript;
       } else {
         interim_transcript += event.results[i][0].transcript;
       }
-      final_span.textContent = final_transcript;
+      final_transcript = capitalize(final_transcript);
+      final_span.textContent = final_transcript  + '. '
       interim_span.textContent = interim_transcript;
     }
+    previous_interim_transcript = interim_transcript
   }
   
   recognition.onsoundend = function(){
@@ -70,6 +75,11 @@ if (typeof SpeechRecognition === "undefined") {
     recognizing = false;
     recog_button.textContent = 'Start recognition'
   }
+}
+
+var first_char = /\S/;
+function capitalize(s) {
+  return s.replace(first_char, function(m) { return m.toUpperCase(); });
 }
 
 function startRecog(event) {
