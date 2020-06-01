@@ -13,23 +13,31 @@ async function synthTranslator(event) {
   var lang_to = lang_to_input.value;
 
   if(!text) return;
+  
+  if (recognizing) {
+    recog_button.click();
+  }
 
   // if (lang_from === 'en') {
   //   text = await punctuate(text);
   //   final_span.textContent = text;
   // }
 
-  var translatedText = await translate(text, lang_to, lang_from);
-  translation_span.textContent = translatedText;
-
-  if (recognizing) {
-    recog_button.click();
+  let translatedText;
+  if (lang_to !== lang_from) {
+    translatedText = await translate(text, lang_to, lang_from);
+  } else {
+    translatedText = text;
   }
+  translation_span.textContent = translatedText;
 
   var textToUtter = translatedText || 
     "Cannot get translated text. Returning previous text. " + text;
   var utterThis = new SpeechSynthesisUtterance(textToUtter);
   utterThis.lang = lang_to;
+
+  // make sure window.speechSynthesis is not speaking
+  synth.cancel();
   synth.speak(utterThis);
 }
 

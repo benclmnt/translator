@@ -23,19 +23,19 @@
       <span class="final" id="final_span"></span>
       <span class="interim" id="interim_span"></span>
     </div>
-    <button id="synth_button">Translate</button>
+    <button id="synth_button">Speak</button>
     <div>
       <label for="lang_to">Translate to:</label>
 
       <select name="lang_to" id="lang_to">
-        <option value="id">Indonesia</option>
         <option value="en">English</option>
+        <option value="id">Indonesia</option>
       </select>
     </div>
     <div>
       <span class="translation" id="translation"></span>
     </div>
   </body>
-  <script type="module" src="speech_recog.js"></script>
-  <script type="module" src="speech_synth.js"></script>
+  <script type="module" src="/dist/speech_recog.js"></script>
+  <script type="module" src="/dist/speech_synth.js"></script>
 </html>
