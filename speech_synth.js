@@ -1,5 +1,5 @@
 import { recognizing, recog_button, final_span, interim_span } from './speech_recog.js';
-import { translate, punctuate } from './utils.js'
+import { translate } from './utils.js'
 
 var synth = window.speechSynthesis;
 var synth_button = document.querySelector('#synth_button');
